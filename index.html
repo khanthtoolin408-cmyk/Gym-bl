@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To My Love | Gymbl</title>
+    <title>To My Main" | Gymbl</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+ 
     <style>
         :root {
             --bg: #050505;
@@ -110,7 +112,7 @@
     <section>
         <div class="reveal">
             <p style="letter-spacing: 6px; font-weight: 200; margin-bottom: 15px; font-size: 0.8rem;">SINCE FEB 18, 2025</p>
-            <h1>Always Ours</h1>
+            <h1>Always For U</h1>
             <p style="font-style: italic; font-family: 'Cormorant Garamond'; font-size: 1.2rem; opacity: 0.8; margin-top: 15px;">"In a sea of people, my eyes will always search for you."</p>
         </div>
     </section>
@@ -130,7 +132,88 @@
 <br>Gym bl</br>
             </div>
         </div>
+<br></br>
+<p style="color: var(--gold); letter-spacing: 4px; margin-bottom: 15px; font-size: 0.8rem;">18 FEBRUARY 2026</p>
+<h2>Happy 1 Year Anniversary</h2>
     </section>
+<section onclick="this.classList.toggle('active')" class="reveal-box">
+    <div class="tap-hint">
+        <span style="display:block; font-size: 1.5rem; margin-bottom: 10px;">⏳</span>
+        TAP TO SEE OUR LOVING TIMES
+    </div>
+
+    <div class="content-hidden">
+        <h2 style="color: var(--gold); font-family: 'Cormorant Garamond'; letter-spacing: 3px; font-style: italic; margin-bottom: 5px;">Our Journey</h2>
+        <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 25px; letter-spacing: 2px;">SINCE FEB 18, 2025</p>
+        
+        <div class="anni-premium-grid">
+            <div class="p-box"><span id="a-y">0</span><p>Years</p></div>
+            <div class="p-box"><span id="a-m">0</span><p>Months</p></div>
+            <div class="p-box"><span id="a-d">0</span><p>Days</p></div>
+            <div class="p-box"><span id="a-h">00</span><p>Hours</p></div>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.85rem; color: var(--gold); opacity: 0.8; font-style: italic;">
+            "Every second with you is a blessing." ❤️
+        </p>
+    </div>
+</section>
+
+<style>
+    /* CSS အပိုင်း: <style> tag ထဲမှာ သွားကူးထည့်ပါ */
+    .reveal-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(197, 160, 89, 0.15);
+        border-radius: 20px;
+        padding: 40px 20px;
+        margin: 20px auto;
+        max-width: 400px;
+        cursor: pointer;
+        transition: 0.5s all ease;
+    }
+    .tap-hint {
+        color: var(--gold);
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        animation: pulseFade 2s infinite;
+    }
+    @keyframes pulseFade { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    
+    .content-hidden { display: none; opacity: 0; transform: translateY(10px); }
+    
+    /* နှိပ်လိုက်ရင် ပေါ်လာစေတဲ့ Style */
+    .reveal-box.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.05); }
+    .reveal-box.active .tap-hint { display: none; }
+    .reveal-box.active .content-hidden { display: block; opacity: 1; transform: translateY(0); transition: 0.8s ease; }
+
+    .anni-premium-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .p-box { 
+        background: rgba(0, 0, 0, 0.3); 
+        border: 1px solid rgba(197, 160, 89, 0.2); 
+        padding: 15px 5px; 
+        border-radius: 12px; 
+    }
+    .p-box span { font-size: 1.6rem; font-weight: bold; color: #fff; display: block; }
+    .p-box p { font-size: 0.5rem; color: var(--gold); text-transform: uppercase; }
+</style>
+
+<script>
+    // JavaScript အပိုင်း: <script> tag ထဲမှာ အရင်ရှိတာတွေဖျက်ပြီး ဒါလေးထည့်ပါ
+    function updateAnni() {
+        const start = new Date("2025-02-18T00:00:00");
+        const now = new Date();
+        let y = now.getFullYear() - start.getFullYear();
+        let m = now.getMonth() - start.getMonth();
+        let d = now.getDate() - start.getDate();
+        if (d < 0) { m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+        if (m < 0) { y--; m += 12; }
+        document.getElementById('a-y').innerText = y;
+        document.getElementById('a-m').innerText = m;
+        document.getElementById('a-d').innerText = d;
+        document.getElementById('a-h').innerText = now.getHours().toString().padStart(2, '0');
+    }
+    setInterval(updateAnni, 1000); updateAnni();
+</script>
 
     <section>
         <div class="reveal">
@@ -143,7 +226,7 @@
             </div>
             <div class="message-box">
                 Thae".., Mg's pu tu tu ly a yan cx dl...
-ဘာလိုလိုနဲ့မောင်တို့တွဲတာ တနှစ်တောင်ပြည့်ပြီနော် မောင်မောင့်နား အကြာကြီး ရှိနေပေးလို့ အများကြကျေးဇူးပါဗျာ နောက်ထပ်လဲအကြာကြီးထပ်ရှိပေးပါဦးဗျ မောင့်သဲသဲချစ်ပေးတာကို သဘောကျပြီးစွဲလမ်းနေပြီဟောဒီ မောင်မောင်က ၊ သဲသဲ နဲ့တွေ့ရတာ မောင်ကံကောင်းတယ်။သဲသဲကအမြဲဂရုစိုက်ပေးတယ်  မောင့်တွက်ဆို အမြဲစဥ်းစားပေးတယ် မောင်မောင် ဆိုးမိရင်လဲထိန်းပေးတယ် ဒါမဲ့ 12 ရာသီချွဲစိန်လေးကတော့ လူကြီးကနေ ကလေးဆန်သွားတဲ့မောင့်မယားလေးပေါ့။ 
+ဘာလိုလိုနဲ့မောင်တို့တွဲတာ တနှစ်တောင်ပြည့်ပြီနော် မောင်မောင့်နား အကြာကြီး ရှိနေပေးလို့ အများကြီးကျေးဇူးပါဗျာ နောက်ထပ်လဲအကြာကြီးထပ်ရှိပေးပါဦးဗျ မောင့်သဲသဲချစ်ပေးတာကို သဘောကျပြီးစွဲလမ်းနေပြီဟောဒီ မောင်မောင်က ၊ သဲသဲ နဲ့တွေ့ရတာ မောင်ကံကောင်းတယ်။သဲသဲကအမြဲဂရုစိုက်ပေးတယ်  မောင့်တွက်ဆို အမြဲစဥ်းစားပေးတယ် မောင်မောင် ဆိုးမိရင်လဲထိန်းပေးတယ် ဒါမဲ့ 12 ရာသီချွဲစိန်လေးကတော့ လူကြီးကနေ ကလေးဆန်သွားတဲ့မောင့်မယားလေးပေါ့။ 
 မောင်မောင် တို့ စတွဲတုန်းကထက် ပိုပြီးရင်းနှီးလာသလိုခံစားရတယ် တကယ်လဲပိုရင်းနှီးလာတယ် ခုတော့ အရမ်းချစ်နေကြပြီ သဲသဲလေးရဲ့။ မောင်မောင်ကမရှိမဖြစ်ဘူးလို့ သဲက ပြောတာ ခုလဲအ့လိုပဲမောင့်တွက်လဲသဲက မရှိမဖြစ်လေးပါပဲဗျာ။ မောင်မောင့် အသဲနှလုံးလေး ပူတူးလေး ချစ်ဆုံးလေး မိန်းမ မယား မျိုးစုံခေါ်မဝလောက်အောင်ချစ်စရာကောင်းပြီး ချစ်မဝဘူး မောင့်သဲသဲက ၊ မောင်မောင့်အနေနဲ့ အရာရာတိုင်းကိုသဲတွက်ပဲတွေးနေမိတာမို့ စိတ်ချပါနော် သဲသဲမောင့်ကိုယုံတာမို့ မောင့်ကိုစိတ်ချလို့ရတယ် သဲသဲစကားလဲမောင်ပိုနားထောင်ပါ့မယ် သဲသဲ မကြိုက်တာလေးတေလဲအကောင်းဆုံးပြင်ပြီးတော့ သဲသဲရဲ့ အချစ်တွေ အကုန်လုံးကို သိမ်းပိုက်လိုက်ပါ့မယ်နော် မောင့်ချစ်သူလေးဖြစ်ရတာ သဲသဲလဲ ပျော်တယ်ဆိုလို့ မောင်မောင်ကလဲ သိပ်ပျော်တယ် ချစ်သူ။ မောင်မောင်တို့ နောက် နှစ် အကြာကြီးထိ မခွဲပဲချစ်သွားကြမယ်နော် မောင်မောင်တို့ တယောက်ကိုယ်တယောက် နားလည်ပေးပြီး အချစ်စစ်နဲ့သာဆက်ချစ်သွားရင်မြဲနိုင်တာမို့ သဲသဲ စိတ်ကူးလေးတွေ လဲအကောင်ထည်ဖော်ကြမယ်ဗျာ သဲသဲ ဖြစ်ချင်တာကို ဖြစ််အောင်လုပ် ဒါမဲ့ မောင်ဖြစ်ချင်တာသဲချစ်ဆုံးလူသားပဲမို့ နားလည်မှု ချစ်ခင်မှု ကြင်နာမှုတွေနဲ့ အတူ ရှေ့ဆက်ချစ်သွားကြမယ် မယား အရမ်းချစ်တယ် အများကြီးချစ်တယ် ပြောမဝလောက်အောင်ချစ်တယ် သိပ်သိပ်ချစ်တယ်🫶🏻  G12 ပြီးရင် နှစ်တိုင်းနှစ်တိုင်း အမှတ်တရတွေနဲ့ ဖြတ်သန်းသွားမယ် ။ ။ ဒီထက်မက ပို ပို ချစ်နေမယ်။ 
 <br> ur bf </br>
 <br>Gym bl</br>
