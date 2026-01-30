@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Love | Gymbl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --text: #ffffff;
+            --gold: #c5a059;
+            --soft-white: rgba(255, 255, 255, 0.85);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            /* မြန်မာစာအတွက် line-height ကို ၁.၆ ထားခြင်းက အကျဲဆုံးပါပဲ */
+            font-family: 'Montserrat', 'Pyidaungsu', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Password Layer */
+        #pw-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 3000; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
+        }
+        #pw-input {
+            background: transparent; border: none; border-bottom: 1px solid var(--gold);
+            color: var(--gold); font-size: 1.5rem; text-align: center;
+            padding: 5px; outline: none; width: 200px; margin-bottom: 20px;
+        }
+        .pw-btn {
+            background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); padding: 8px 30px; cursor: pointer;
+            letter-spacing: 2px; font-size: 0.7rem;
+        }
+
+        #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.35; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.5s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        section {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 80px 10vw; text-align: center;
+        }
+
+        #entry-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 2000; display: none;
+            flex-direction: column; justify-content: center; align-items: center; cursor: pointer;
+        }
+
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 300; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-style: italic; margin-bottom: 20px; color: var(--gold); }
+        
+        /* စာလုံးအကွာအဝေး ညှိထားသော box */
+        .message-box { 
+            font-size: 1.1rem; 
+            font-weight: 400; 
+            color: var(--soft-white); 
+            max-width: 800px; 
+            margin: 0 auto 0px auto; 
+            text-align: left; 
+            letter-spacing: 0px; /* စာလုံးတွေ မကျဲအောင် 0 ထားပါ */
+            word-wrap: break-word;
+        }
+
+        .anni-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 40px 0; width: 100%; max-width: 800px; }
+        .time-box { border-bottom: 1px solid var(--gold); padding: 20px 5px; background: rgba(255,255,255,0.02); }
+        .time-box span { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; display: block; color: #fff; }
+        .time-box p { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+
+        #music-toggle {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            width: 45px; height: 45px; border: 1px solid var(--gold);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; background: rgba(0,0,0,0.5); color: var(--gold); display: none; font-size: 0.6rem;
+        }
+
+        .signature { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--gold); letter-spacing: 5px; margin-top: 40px; font-style: italic; }
+        @media (max-width: 768px) { .anni-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+    <div id="pw-screen">
+        <p style="letter-spacing: 3px; font-size: 0.7rem; color: var(--gold); margin-bottom: 20px;">ENTER ACCESS CODE</p>
+        <input type="password" id="pw-input" placeholder="••••">
+        <button class="pw-btn" onclick="checkPassword()">UNLOCK</button>
+        <p id="error-msg" style="color: #ff4d6d; font-size: 0.6rem; margin-top: 10px; display: none;">INCORRECT CODE</p>
+    </div>
+
+    <div id="entry-overlay" onclick="startStory()">
+        <h2 style="font-size: 1.2rem; font-style: normal; letter-spacing: 4px;">TO MY LOVE</h2>
+        <p style="letter-spacing: 2px; font-weight: 200; font-size: 0.7rem; margin-top: 15px; color: var(--gold);">TAP TO ENTER</p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <audio id="loveSong" loop><source src="https://www.dl.dropboxusercontent.com/s/z4q1wx5r2x8p6x0/My_Heart_Will_Go_On_Celine_Dion.mp3?dl=0" type="audio/mp3"></audio>
+
+    <div id="music-toggle" onclick="toggleMusic()">MUTE</div>
+
+    <section>
+        <div class="reveal">
+            <p style="letter-spacing: 6px; font-weight: 200; margin-bottom: 15px; font-size: 0.8rem;">SINCE FEB 18, 2025</p>
+            <h1>Always Ours</h1>
+            <p style="font-style: italic; font-family: 'Cormorant Garamond'; font-size: 1.2rem; opacity: 0.8; margin-top: 15px;">"In a sea of people, my eyes will always search for you."</p>
+        </div>
+    </section>
+
+    <section style="background: rgba(255,255,255,0.01);">
+        <div class="reveal">
+            <p style="color: var(--gold); letter-spacing: 4px; margin-bottom: 15px; font-size: 0.8rem;">17 FEBRUARY 2026</p>
+            <h2>Happy Birthday, My Main”</h2>
+            <div class="message-box">
+                မောင်မောင့်ချစ်ဆုံးလေး17 နှစ်ပြည့်မွေးနေ့မှာပျော်ရွင်ပါစေနော် သဲသဲမွေးနေ့မှာ မောင်မောင်ရှိပေးနိုင်လို့ပိုပျော်ပါစေဗျာ သဲသဲရဲ့ ချစ်သူလေး မောင်မောင်က သဲသဲ နောက်နှစ်ပေါင်းများစွာ သဲနားရှိနေပေးပါ့မယ် သဲသဲ အမြဲတမ်းပျော်ရွင်နေစေရပါမယ်နော် မောင့်မောင့် အချစ်ဆုံးရဲ့ မွေးနေ့မှစ၍ နှစ်ပေါင်းများစွာတိုင်အောင် အသက်ရှည် ကျန်းမာပြီး ဖြစ်ချင်တာတွေလဲ ဖြစ်ရပါစေ ပြီးတော့ သဲသဲ နေချင်တဲ့သူတွေ သဲသဲရည်မှန်းချက်တွေလဲ အကောင်ထည်ဖော်နိုင်ပါစေနော် ခုဖြေမဲ့ G12 စာမေးပွဲကိုလဲ အမှတ်ကောင်းကောင်းနဲ့ အောင်နိုင်ပါစေ။
+            </div>
+            <div class="message-box">
+                သဲသဲ စိတ်ကူးယဥ်တာလေးတွေ ဖြစ်စေချင်တာလေးတွေလဲ အမြန်ဆုံးဖြစ်လာပြီး ကြိုးစားတိုင်းအောင်မြင်ပါစေ။မိဘအပေါ်သိတတ်တဲ့ ကလေးလေးလဲ ဖြစ်ပြီး မိဘကျေးဇူးဆပ်နိုင်ပါစေ။ သဲသဲမွေးနေ့တိုင်းလဲ ဒီထက်မက ပိုချစ်စရာကောင်းပြီး ပိုကံကောင်းပါစေ။ သဲသဲဝါသနာပါတာတွေလဲ အကောင်ထည် ဖော်နိုင်ပြီး သဲသဲ ဘုရားမှာ ဆုတောင်းတာတွေကအစ အကုန်လုံးဆုတောင်းပါစေ။
+အမြဲ ကျန်း"မာ"နဲ့ပျော်ပျော်ရွှင်ရွှင် နေပေးပါနော်  သဲသဲအနာဂတ်အတွက်အကောင်းဆုံးကြိုးစားပါဗျ
+သဲသဲနားမောင် အမြဲရှိပါ့မယ် မောင်မောင့်ကမ္ဘာငယ်လေး
+<br>အရမ်းချစ်ရပါသော ချစ်သူလေး</br>
+<br>Gym bl</br>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="reveal">
+            <h2 style="font-size: 2.5rem;">365 Days of Us</h2>
+            <div class="anni-grid">
+                <div class="time-box"><span id="days">000</span><p>Days</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+                <div class="time-box"><span id="mins">00</span><p>Mins</p></div>
+                <div class="time-box"><span id="secs">00</span><p>Secs</p></div>
+            </div>
+            <div class="message-box">
+                Thae".., Mg's pu tu tu ly a yan cx dl...
+ဘာလိုလိုနဲ့မောင်တို့တွဲတာ တနှစ်တောင်ပြည့်ပြီနော် မောင်မောင့်နား အကြာကြီး ရှိနေပေးလို့ အများကြကျေးဇူးပါဗျာ နောက်ထပ်လဲအကြာကြီးထပ်ရှိပေးပါဦးဗျ မောင့်သဲသဲချစ်ပေးတာကို သဘောကျပြီးစွဲလမ်းနေပြီဟောဒီ မောင်မောင်က ၊ သဲသဲ နဲ့တွေ့ရတာ မောင်ကံကောင်းတယ်။သဲသဲကအမြဲဂရုစိုက်ပေးတယ်  မောင့်တွက်ဆို အမြဲစဥ်းစားပေးတယ် မောင်မောင် ဆိုးမိရင်လဲထိန်းပေးတယ် ဒါမဲ့ 12 ရာသီချွဲစိန်လေးကတော့ လူကြီးကနေ ကလေးဆန်သွားတဲ့မောင့်မယားလေးပေါ့။ 
+မောင်မောင် တို့ စတွဲတုန်းကထက် ပိုပြီးရင်းနှီးလာသလိုခံစားရတယ် တကယ်လဲပိုရင်းနှီးလာတယ် ခုတော့ အရမ်းချစ်နေကြပြီ သဲသဲလေးရဲ့။ မောင်မောင်ကမရှိမဖြစ်ဘူးလို့ သဲက ပြောတာ ခုလဲအ့လိုပဲမောင့်တွက်လဲသဲက မရှိမဖြစ်လေးပါပဲဗျာ။ မောင်မောင့် အသဲနှလုံးလေး ပူတူးလေး ချစ်ဆုံးလေး မိန်းမ မယား မျိုးစုံခေါ်မဝလောက်အောင်ချစ်စရာကောင်းပြီး ချစ်မဝဘူး မောင့်သဲသဲက ၊ မောင်မောင့်အနေနဲ့ အရာရာတိုင်းကိုသဲတွက်ပဲတွေးနေမိတာမို့ စိတ်ချပါနော် သဲသဲမောင့်ကိုယုံတာမို့ မောင့်ကိုစိတ်ချလို့ရတယ် သဲသဲစကားလဲမောင်ပိုနားထောင်ပါ့မယ် သဲသဲ မကြိုက်တာလေးတေလဲအကောင်းဆုံးပြင်ပြီးတော့ သဲသဲရဲ့ အချစ်တွေ အကုန်လုံးကို သိမ်းပိုက်လိုက်ပါ့မယ်နော် မောင့်ချစ်သူလေးဖြစ်ရတာ သဲသဲလဲ ပျော်တယ်ဆိုလို့ မောင်မောင်ကလဲ သိပ်ပျော်တယ် ချစ်သူ။ မောင်မောင်တို့ နောက် နှစ် အကြာကြီးထိ မခွဲပဲချစ်သွားကြမယ်နော် မောင်မောင်တို့ တယောက်ကိုယ်တယောက် နားလည်ပေးပြီး အချစ်စစ်နဲ့သာဆက်ချစ်သွားရင်မြဲနိုင်တာမို့ သဲသဲ စိတ်ကူးလေးတွေ လဲအကောင်ထည်ဖော်ကြမယ်ဗျာ သဲသဲ ဖြစ်ချင်တာကို ဖြစ််အောင်လုပ် ဒါမဲ့ မောင်ဖြစ်ချင်တာသဲချစ်ဆုံးလူသားပဲမို့ နားလည်မှု ချစ်ခင်မှု ကြင်နာမှုတွေနဲ့ အတူ ရှေ့ဆက်ချစ်သွားကြမယ် မယား အရမ်းချစ်တယ် အများကြီးချစ်တယ် ပြောမဝလောက်အောင်ချစ်တယ် သိပ်သိပ်ချစ်တယ်🫶🏻  G12 ပြီးရင် နှစ်တိုင်းနှစ်တိုင်း အမှတ်တရတွေနဲ့ ဖြတ်သန်းသွားမယ် ။ ။ ဒီထက်မက ပို ပို ချစ်နေမယ်။ 
+<br> ur bf </br>
+<br>Gym bl</br>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #000;">
+        <div class="reveal">
+            <h1 style="font-size: 2.2rem; color: #fff;">Infinity & Beyond</h1>
+            <p style="margin-top: 60px; font-size: 0.65rem; letter-spacing: 3px; opacity: 0.5;">WITH ALL MY LOVE,</p>
+            <div class="signature">Gymbl</div>
+        </div>
+    </section>
+
+    <script>
+        function checkPassword() {
+            const pw = document.getElementById('pw-input').value;
+            if (pw === "Gymbl&UrBF") {
+                document.getElementById('pw-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('pw-screen').style.display = 'none';
+                    document.getElementById('entry-overlay').style.display = 'flex';
+                }, 800);
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', init);
+        class P {
+            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.v = Math.random()*0.3+0.1; }
+            draw() { ctx.fillStyle = "rgba(197,160,89,0.2)"; ctx.beginPath(); ctx.arc(this.x, this.y, 0.8, 0, Math.PI*2); ctx.fill(); }
+            update() { this.y -= this.v; if(this.y < 0) this.y = canvas.height; }
+        }
+        function setup() { for(let i=0; i<70; i++) particles.push(new P()); }
+        function loop() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); }
+        init(); setup(); loop();
+
+        const song = document.getElementById('loveSong');
+        const mToggle = document.getElementById('music-toggle');
+        
+        function startStory() {
+            document.getElementById('entry-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('entry-overlay').style.display = 'none';
+                song.play();
+                mToggle.style.display = 'flex';
+            }, 800);
+        }
+
+        function toggleMusic() {
+            if(song.paused) { song.play(); mToggle.innerText = "MUTE"; }
+            else { song.pause(); mToggle.innerText = "PLAY"; }
+        }
+
+        const observer = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        const startDate = new Date("February 18, 2025 00:00:00").getTime();
+        function updateCounter() {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2,'0');
+            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2,'0');
+            document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2,'0');
+        }
+        setInterval(updateCounter, 1000);
+    </script>
+</body>
+</html>
